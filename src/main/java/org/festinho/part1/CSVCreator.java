@@ -23,7 +23,7 @@ public class CSVCreator {
     private CSVCreator() {
     }
 
-    public static void createCSVReleases(String projName,Map<LocalDateTime, String> releasesID,Map<LocalDateTime, String> releasesNameVersion,List<LocalDateTime> releasesOnlyDate) throws IOException {
+    public static void createCSVReleases(String projName,Map<LocalDateTime, String> releasesID,Map<LocalDateTime, String> releasesNameVersion,List<LocalDateTime> releasesOnlyDate){
         /*CREAZIONE FILE CSV CON LE RELEASE*/
         try (FileWriter fileWriter = new FileWriter(projName.toLowerCase() + ".ReleasesList.csv")) {
 
@@ -53,9 +53,10 @@ public class CSVCreator {
 
 
     public static void writeCSVBuggyness(List<Release> releasesList, String project) {
-        try {
+
+        try (FileWriter fileWriter = new FileWriter(project.toLowerCase()+".Buggyness.csv"))
+        {
             //creo file csv.
-            FileWriter fileWriter = new FileWriter(project.toLowerCase()+".Buggyness.csv");
             fileWriter.append("RELEASE,FILENAME,SIZE,LOC_added,MAX_LOC_Added,AVG_LOC_Added,CHURN,MAX_Churn,AVG_Churn,NR,NAUTH,CHGSETSIZE,MAX_ChgSet,AVG_ChgSet,BUGGYNESS\n");
             for (Release release : releasesList) {
 
@@ -68,6 +69,7 @@ public class CSVCreator {
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "Error in writeCSVBuggyness");
         }
+
     }
 
     private static void appendMetrics(FileWriter fileWriter, Release release, JavaFile file) throws IOException {
