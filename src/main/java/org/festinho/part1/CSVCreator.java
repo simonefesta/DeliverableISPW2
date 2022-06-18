@@ -25,17 +25,14 @@ public class CSVCreator {
     }
 
     public static void createCSVReleases(String projName,Map<LocalDateTime, String> releasesID,Map<LocalDateTime, String> releasesNameVersion,List<LocalDateTime> releasesOnlyDate) throws IOException {
-        FileWriter fileWriter = null;
         /*CREAZIONE FILE CSV CON LE RELEASE*/
-        try  {
-             fileWriter = new FileWriter(projName.toLowerCase() + ".ReleasesList.csv");
+        try (FileWriter fileWriter = new FileWriter(projName.toLowerCase() + ".ReleasesList.csv")) {
 
             fileWriter.append("Index,VersionID,VersionName,Date");
             fileWriter.append("\n");
 
-            for (int i = 0; i < releasesOnlyDate.size(); i++)
-            {                                                                       //Ho ordinato le releases in base alla data. Poiché sono hash, li esploro usando un indice, e accedo al valore (ID, nome,data), in questo ordine.
-                int index = i+1;
+            for (int i = 0; i < releasesOnlyDate.size(); i++) {                                                                       //Ho ordinato le releases in base alla data. Poiché sono hash, li esploro usando un indice, e accedo al valore (ID, nome,data), in questo ordine.
+                int index = i + 1;
                 fileWriter.append(Integer.toString(index));                     // indice nel file csv che identifica la tupla.
                 fileWriter.append(",");
                 fileWriter.append(releasesID.get(releasesOnlyDate.get(i)));      //prelevo l'Id, univoco, andando in releaseOnlyDate ordinato e prendendo la data d'indice 'i'.
@@ -50,9 +47,6 @@ public class CSVCreator {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error in CSV Releases Lists");
 
-        }
-        finally {
-        fileWriter.close();
         }
 
 
