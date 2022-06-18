@@ -131,7 +131,7 @@ public class CSVcreator {
         fileWriter.flush();
     }
 
-// per arrotondare alla seconda cifra decimale
+// per arrotondare alla seconda cifra decimale!
 
     public static String doubleTransform(Double value) {
         DecimalFormat df = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.US));
