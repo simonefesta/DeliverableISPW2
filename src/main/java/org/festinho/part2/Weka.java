@@ -53,6 +53,7 @@ public class Weka {
     private static final String ERROR_CLASSIFIER = "Error in building classifier";
 
     //added for resolve code smells
+
     private static final String USERPC = "festinho";
     private static final String PROJECTPATH = "IdeaProjects";
     private static final String NAMEPROJECT = "Deliverable1";
