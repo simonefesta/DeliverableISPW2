@@ -189,7 +189,7 @@ public class Weka {
 
         catch (Exception e) {
             logger.log(Level.SEVERE,"Error in walkForward");
-            e.printStackTrace();
+
         }
 
 }
@@ -362,7 +362,7 @@ public class Weka {
 
                     } catch (Exception e) {
                         logger.log(Level.SEVERE, "Error in oversampling");
-                        e.printStackTrace();
+
                     }
                     break;
 
@@ -381,7 +381,7 @@ public class Weka {
                         trainingBalanced = Filter.useFilter(trainingBalanced, spreadSubsample);
                     } catch (Exception e) {
                         logger.log(Level.SEVERE, "Error in undersampling");
-                        e.printStackTrace();
+
                     }
                     break;
 
@@ -398,7 +398,7 @@ public class Weka {
 
                     } catch (Exception e) {
                         logger.log(Level.SEVERE, "Error in SMOTE");
-                        e.printStackTrace();
+
                     }
                     break;
 
@@ -500,7 +500,7 @@ public class Weka {
         } catch (Exception e)
         {
             logger.log(Level.SEVERE,"Error in initializing the evaluator");
-            e.printStackTrace();
+
         }
 
     }
@@ -518,7 +518,6 @@ public class Weka {
             } catch (Exception e) {
                 logger.log(Level.SEVERE,ERROR_CLASSIFIER);
 
-                e.printStackTrace();
             }
 
         }
@@ -530,7 +529,6 @@ public class Weka {
                 addEvaluationToEntry(eval,entry);
             } catch (Exception e) {
                 logger.log(Level.SEVERE,ERROR_CLASSIFIER);
-                e.printStackTrace();
             }
         }
     }
@@ -544,7 +542,6 @@ public class Weka {
 
         } catch (Exception e) {
             logger.log(Level.SEVERE,ERROR_CLASSIFIER);
-            e.printStackTrace();
         }
     }
 
