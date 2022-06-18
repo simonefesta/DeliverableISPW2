@@ -14,6 +14,9 @@ import java.util.*;
 
 public class RetrieveJira {
 
+    private RetrieveJira() {
+    }
+
     private static Map<LocalDateTime, String> releasesNameVersion;
     private static Map<LocalDateTime, String> releasesID;
     private static List<LocalDateTime> releasesOnlyDate;

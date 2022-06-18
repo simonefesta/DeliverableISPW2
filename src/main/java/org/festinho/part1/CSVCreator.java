@@ -40,7 +40,7 @@ public class CSVCreator {
                 fileWriter.append(",");
                 fileWriter.append(releasesNameVersion.get(releasesOnlyDate.get(i))); //nome della release (es 4.0.1)
                 fileWriter.append(",");
-                fileWriter.append(((releasesOnlyDate.get(i).toString())));      //data release.
+                fileWriter.append(releasesOnlyDate.get(i).toString());      //data release.
                 fileWriter.append("\n");
             }
 

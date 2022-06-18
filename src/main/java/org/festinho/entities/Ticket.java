@@ -62,6 +62,13 @@ public class Ticket {
         return iv;
     }
 
+    public Integer getIndex() {
+        return index;
+    }
+
+    public List<String>  getFileList() { return fileList;}
+
+
 
 
     public List<RevCommit> getCommitList() {

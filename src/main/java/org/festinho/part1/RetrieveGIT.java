@@ -117,7 +117,7 @@ public class RetrieveGIT {
 
         //goal: aggiungo il file java nella lista di file appartenenti alla release.
         String filename = treeWalk.getPathString(); //nome del file
-        if (filename.endsWith(".java")) {  //path, dove il commit ha toccato.
+        if (filename.endsWith(FILE_EXTENSION)) {  //path, dove il commit ha toccato.
             JavaFile file = new JavaFile(filename); //creo nuova istanza file java con nome appena trovato.
 
             if (!fileNameList.contains(filename)) { //se questo file non è mai stato 'visto' prima d'ora

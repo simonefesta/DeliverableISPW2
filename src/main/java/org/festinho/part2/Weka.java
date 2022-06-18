@@ -83,7 +83,7 @@ public class Weka {
             ArffSaver saver = new ArffSaver();
             saver.setInstances(data);//set the dataset we want to convert
             //and save as ARFF
-            saver.setFile(new File("/Users/festinho/IdeaProjects/Deliverable1/"+MainClass.NAMEPROJECT.toLowerCase()+".Buggyness.arff"));
+            saver.setFile(new File(PATH+MainClass.NAMEPROJECT.toLowerCase()+".Buggyness.arff"));
             saver.writeBatch();
 
         }
