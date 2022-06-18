@@ -54,10 +54,11 @@ public class Weka {
 
     //added for resolve code smells
     private static final String USERPC = "festinho";
-    private static final String PROJECTPATH = "/IdeaProjects/";
-    private static final String NAMEPROJECT = "Deliverable1/";
+    private static final String PROJECTPATH = "IdeaProjects";
+    private static final String NAMEPROJECT = "Deliverable1";
+    private  static final String SEPARATOR = "/";
 
-    private static final String PATH = "/Users/" + USERPC + PROJECTPATH + NAMEPROJECT;
+    private static final String PATH = "/Users/" + USERPC + SEPARATOR + PROJECTPATH + SEPARATOR + NAMEPROJECT + SEPARATOR;
 
 
 
