@@ -9,3 +9,6 @@ Il progetto prevede due moduli:
 PROJECT STATS:
 
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=simonefesta_DeliverableISPW2&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=simonefesta_DeliverableISPW2)  [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=simonefesta_DeliverableISPW2&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=simonefesta_DeliverableISPW2)   [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=simonefesta_DeliverableISPW2&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=simonefesta_DeliverableISPW2)  [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=simonefesta_DeliverableISPW2&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=simonefesta_DeliverableISPW2)  [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=simonefesta_DeliverableISPW2&metric=bugs)](https://sonarcloud.io/summary/new_code?id=simonefesta_DeliverableISPW2)
+
+
+See Sonarcloud : https://sonarcloud.io/summary/overall?id=simonefesta_DeliverableISPW2
