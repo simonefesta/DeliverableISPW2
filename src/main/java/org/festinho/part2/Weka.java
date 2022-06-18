@@ -52,10 +52,12 @@ public class Weka {
     private static List<WekaRecord> wekaRecordList;
     private static final String ERROR_CLASSIFIER = "Error in building classifier";
 
+    //added for resolve code smells
     private static final String USERPC = "festinho";
-    private static final String PROJECTPATH = "/IdeaProjects/Deliverable1/";
+    private static final String PROJECTPATH = "/IdeaProjects/";
+    private static final String NAMEPROJECT = "Deliverable1/";
 
-    private static final String PATH = "/Users/" + USERPC + PROJECTPATH;    //added for resolve code smells
+    private static final String PATH = "/Users/" + USERPC + PROJECTPATH + NAMEPROJECT;
 
 
 
