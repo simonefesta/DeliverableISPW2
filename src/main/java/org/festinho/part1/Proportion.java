@@ -1,4 +1,4 @@
-package org.festinho.part1Retrieve;
+package org.festinho.part1;
 
 import org.festinho.entities.Ticket;
 
@@ -8,6 +8,9 @@ import java.util.List;
 public class Proportion {
 
 private static int percentageMovingWindows;
+
+    private Proportion() {
+    }
 
 
     public static void proportion(List<Ticket> ticketList){
@@ -51,7 +54,8 @@ private static int percentageMovingWindows;
 
     public static void setIvUsingProportion(List<Ticket> listTicketProportion,Ticket ticket){
 
-    float p, pTotalSum = 0;
+    float p = 0;
+    float pTotalSum = 0;
     for(Ticket t : listTicketProportion){ //qui ho IV sempre definiti
         p = calculatePFormula(t);
         pTotalSum = pTotalSum + p;

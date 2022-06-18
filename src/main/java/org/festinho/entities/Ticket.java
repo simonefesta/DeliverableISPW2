@@ -21,7 +21,6 @@ public class Ticket {
     private List<RevCommit> commitList;
     private List<String> fileList;
 
-    //private int p;
 
     //costruttore
 
@@ -59,14 +58,6 @@ public class Ticket {
         return ov;
     }
 
-    public Integer getIndex() {
-        return index;
-    }
-
-    public List<String> getFileList() {
-        return fileList;
-    }
-
     public Integer getIV() {
         return iv;
     }
@@ -78,10 +69,6 @@ public class Ticket {
     }
 
     //set
-
-    public void setID(String id) {
-        this.id = id;
-    }
 
     public void setAV(List<Integer> av) {
         this.av = av;
@@ -112,11 +99,4 @@ public class Ticket {
         this.index = index;
     }
 
-    public void setFileList(List<String> fileList) {
-        this.fileList = fileList;
-    }
-
-    public void setCommitList(List<RevCommit> commitList) {
-        this.commitList = commitList;
-    }
 }

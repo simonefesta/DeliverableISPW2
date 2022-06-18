@@ -1,4 +1,4 @@
-package org.festinho.part1Retrieve;
+package org.festinho.part1;
 
 
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -25,22 +25,22 @@ public class MainClass {
     private static List<Release> releasesList;
     private static List<Ticket> ticketList;
     private static List<RevCommit> commitList;
-    public static final String nameProj = "BOOKKEEPER"; // OR 'AVRO'
+    public static final String NAMEPROJECT = "BOOKKEEPER"; // OR 'AVRO'
 
 
     public static void main(String[] args) throws IllegalStateException, GitAPIException, IOException, JSONException {
 
-        String repo = "/Users/festinho/IdeaProjects/" + nameProj.toLowerCase() + "/.git";
-        Path repoPath = Paths.get("/Users/festinho/IdeaProjects/" + nameProj.toLowerCase());
+        String repo = "/Users/festinho/IdeaProjects/" + NAMEPROJECT.toLowerCase() + "/.git";
+        Path repoPath = Paths.get("/Users/festinho/IdeaProjects/" + NAMEPROJECT.toLowerCase());
 
         // in releases List metto tutte le release del progetto
-        releasesList = RetrieveJira.getListRelease(nameProj);
+        releasesList = RetrieveJira.getListRelease(NAMEPROJECT);
 
         // in commit List metto tutti i commit del progetto
         commitList = RetrieveGIT.getAllCommit(releasesList, repoPath);
 
         //prendo tutti i ticket da Jira in accordo alle specifiche
-        ticketList = RetrieveJira.getTickets(releasesList, nameProj);
+        ticketList = RetrieveJira.getTickets(releasesList, NAMEPROJECT);
 
 
         logger.log(Level.INFO, "Eseguo il linkage Tickets - Commits");
@@ -48,7 +48,6 @@ public class MainClass {
         removeHalfRelease(releasesList, ticketList);
 
 
-        //setupAndCheckIv();
         cleanTicketInconsistencies();
         RetrieveGIT.setBuilder(repo);
         logger.log(Level.INFO, "Numero ticket = {0}.", ticketList.size());
@@ -63,7 +62,7 @@ public class MainClass {
         RetrieveGIT.checkBuggyness(releasesList, ticketList); //inizialmente buggyness = NO per ogni release
 
         Metrics.getMetrics(releasesList, repo);
-        CSVcreator.writeCSVBuggyness(releasesList, nameProj.toLowerCase());
+        CSVCreator.writeCSVBuggyness(releasesList, NAMEPROJECT.toLowerCase());
 
     }
 
@@ -156,43 +155,58 @@ public class MainClass {
 
             if (ticket.getIV() != 0) {    //se IV è definita
 
-                if (ticket.getFV() > ticket.getIV() && ticket.getOV() >= ticket.getIV()) { //Caso corretto
-
-                    ticket.getAV().clear(); //svuoto la lista di AV per poi aggiornarla con valori corretti
-                    for (int i = ticket.getIV(); i < ticket.getFV(); i++) {
-                        ticket.getAV().add(i);
-                    }
-
-                }
-                if (ticket.getFV() < ticket.getIV() || ticket.getOV() < ticket.getIV()) { //caso di errore, cioè IV viene dopo FV oppure OV, e non può essere.
-                    ticket.setIV(0);        //setto come errore
-                    ticket.getAV().clear();
-                    ticket.getAV().add(0);
-                }
-                if (ticket.getFV().equals(ticket.getIV())) {    //se FV = IV -> AV vuota.
-                    ticket.getAV().clear();
-                    ticket.getAV().add(0);
-                }
-
-
-                if (ticket.getOV() == 1) {
-                    ticket.getAV().clear(); //svuoto la lista di AV per poi aggiornarla con valori corretti
-                    ticket.setIV(1);
-
-                    if (ticket.getFV() == 1) {
-                        ticket.getAV().add(0);      //se OV=FV allora AV = 0, cioè non metto nulla.
-                    } else {
-
-                        for (int i = ticket.getIV(); i < ticket.getFV(); i++) { //se FV non è prima release, assegno ad AV tutte le release da IV ad FV.
-                            ticket.getAV().add(i);
-                        }
-                    }
-
-                }
+                checkTimeOrderTickets(ticket);
+                checkBaseCaseOV(ticket);
 
             }
 
         }
+    }
+
+
+
+    public static void checkTimeOrderTickets(Ticket ticket) {
+
+        if (ticket.getFV() > ticket.getIV() && ticket.getOV() >= ticket.getIV()) { //Caso corretto
+
+            ticket.getAV().clear(); //svuoto la lista di AV per poi aggiornarla con valori corretti
+            for (int i = ticket.getIV(); i < ticket.getFV(); i++) {
+                ticket.getAV().add(i);
+            }
+
+        }
+        else
+         {  //caso di errore, cioè IV viene dopo FV oppure OV, e non può essere.
+            ticket.setIV(0);        //setto come errore
+            ticket.getAV().clear();
+            ticket.getAV().add(0);
+        }
+
+        if (ticket.getFV().equals(ticket.getIV())) {    //se FV = IV -> AV vuota. (caso 'base')
+            ticket.getAV().clear();
+            ticket.getAV().add(0);
+        }
+    }
+
+
+
+    private static void checkBaseCaseOV(Ticket ticket) { //Condizioni caso base in cui OV = prima release.
+
+        if (ticket.getOV() == 1) {
+            ticket.getAV().clear(); //svuoto la lista di AV per poi aggiornarla con valori corretti
+            ticket.setIV(1);
+
+            if (ticket.getFV() == 1) {
+                ticket.getAV().add(0);      //se OV=FV allora AV = 0, cioè non metto nulla.
+            } else {
+
+                for (int i = ticket.getIV(); i < ticket.getFV(); i++) { //se FV non è prima release, assegno ad AV tutte le release da IV ad FV.
+                    ticket.getAV().add(i);
+                }
+            }
+
+        }
+
     }
 }
 

@@ -1,4 +1,4 @@
-package org.festinho.part1Retrieve;
+package org.festinho.part1;
 
 import org.festinho.entities.JavaFile;
 import org.festinho.entities.WekaRecord;
@@ -16,11 +16,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CSVcreator {
+public class CSVCreator {
 
-    static Logger logger = Logger.getLogger(CSVcreator.class.getName());
+    static Logger logger = Logger.getLogger(CSVCreator.class.getName());
     private static final String ERROR = "Error in csv writer";
 
+    private CSVCreator() {
+    }
 
     public static void createCSVReleases(String projName,Map<LocalDateTime, String> releasesID,Map<LocalDateTime, String> releasesNameVersion,List<LocalDateTime> releasesOnlyDate)
     {
@@ -36,14 +38,15 @@ public class CSVcreator {
                 fileWriter.append(",");
                 fileWriter.append(releasesID.get(releasesOnlyDate.get(i)));      //prelevo l'Id, univoco, andando in releaseOnlyDate ordinato e prendendo la data d'indice 'i'.
                 fileWriter.append(",");
-                fileWriter.append((releasesNameVersion.get(releasesOnlyDate.get(i)))); //nome della release (es 4.0.1)
+                fileWriter.append(releasesNameVersion.get(releasesOnlyDate.get(i))); //nome della release (es 4.0.1)
                 fileWriter.append(",");
                 fileWriter.append(((releasesOnlyDate.get(i).toString())));      //data release.
                 fileWriter.append("\n");
             }
 
         } catch (Exception e) {
-            System.err.print("Something went wrong");
+            logger.log(Level.SEVERE, "Error in CSV Releases Lists");
+
         }
 
 

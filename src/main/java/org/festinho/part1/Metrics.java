@@ -1,4 +1,4 @@
-package org.festinho.part1Retrieve;
+package org.festinho.part1;
 
 
 import org.eclipse.jgit.diff.DiffEntry;
@@ -85,7 +85,7 @@ public class Metrics {
             String type = diffEntry.getChangeType().toString();
             if (diffEntry.toString().contains(FILE_EXTENSION) && type.equals(MODIFY) || type.equals(DELETE) || type.equals(ADD) || type.equals(RENAME)) {
                 String fileName;
-                if (type.equals("DELETE") || type.equals("RENAME")) fileName = diffEntry.getOldPath();
+                if (type.equals(DELETE) || type.equals(RENAME)) fileName = diffEntry.getOldPath();
                 else fileName = diffEntry.getNewPath();
                 calculateMetrics(fileList, fileName, authName, numTouchedClass, diffEntry, diff);
             }
@@ -111,7 +111,8 @@ public class Metrics {
 
         if (!fileList.isEmpty()) {                          //Esiste listaFile, il file che sto considerando vi appartiene?
             for (JavaFile file : fileList) {
-                if (file.getName().equals(fileName)) {
+
+                if (file.getName().equals(fileName)) { //appartiene
                     isFind = true;                                    //il file esiste nella lista dei file esaminati per la release 'x', lo aggiorno.
                     file.setNr(file.getNr() + 1);
                     if (!file.getNAuth().contains(authName)) file.getNAuth().add(authName); //evito doppioni
@@ -124,12 +125,12 @@ public class Metrics {
                 }
 
             }
-        } else { // fileList non esiste!
+        } else { // fileList non esiste! Ho questa condizione quando aggiungo il primo file e non ho ancora file list.
             isFind = true;
             JavaFile javaFile = new JavaFile(fileName);
             applyMetricsNewFile(javaFile, numTouchedClass, locAdded, churn, fileList, authName);
         }
-        if (isFind == false) {                                       //file non appartiene alla fileLIST
+        if (!isFind) {                                       //file non appartiene alla fileLIST ( is find = falso)
             JavaFile javaFile = new JavaFile(fileName);            //fa le stesse cose nel caso file list isEmpty
             applyMetricsNewFile(javaFile, numTouchedClass, locAdded, churn, fileList, authName);
 

@@ -1,4 +1,4 @@
-package org.festinho.part1Retrieve;
+package org.festinho.part1;
 import org.festinho.entities.Release;
 import org.festinho.entities.Ticket;
 import org.json.JSONArray;
@@ -17,7 +17,7 @@ public class RetrieveJira {
     private static Map<LocalDateTime, String> releasesNameVersion;
     private static Map<LocalDateTime, String> releasesID;
     private static List<LocalDateTime> releasesOnlyDate;
-
+    private static final String RELEASEDATE = "releaseDate";    //added for resolve code smells
 
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -57,20 +57,20 @@ public class RetrieveJira {
             String name = "";
             String id = "";
             String releaseDate="";
-            if (versions.getJSONObject(i).has("releaseDate")) {                 //qui sfrutto le api per prelevare nome, id, release date dei ticket JIRA.
+            if (versions.getJSONObject(i).has(RELEASEDATE)) {                 //qui sfrutto le api per prelevare nome, id, release date dei ticket JIRA.
                 if (versions.getJSONObject(i).has("name"))
                     name = versions.getJSONObject(i).get("name").toString();
                 if (versions.getJSONObject(i).has("id"))
                     id = versions.getJSONObject(i).get("id").toString();
-                if (versions.getJSONObject(i).has("releaseDate"))
-                    releaseDate = versions.getJSONObject(i).get("releaseDate").toString();
+                if (versions.getJSONObject(i).has(RELEASEDATE))
+                    releaseDate = versions.getJSONObject(i).get(RELEASEDATE).toString();
                 addRelease(releaseDate, name, id);              // Questo metodo popola gli attributi della classe presente a inizio codice.
 
             }
         }
         releasesOnlyDate.sort(LocalDateTime::compareTo);                                //ordinamento in base alla data
 
-        CSVcreator.createCSVReleases(projName,releasesID,releasesNameVersion,releasesOnlyDate); //dopo aver popolato le tabelle hash delle release, le scrivo su un file csv.
+        CSVCreator.createCSVReleases(projName,releasesID,releasesNameVersion,releasesOnlyDate); //dopo aver popolato le tabelle hash delle release, le scrivo su un file csv.
 
         for (int j = 0; j <releasesOnlyDate.size(); j++)
         {

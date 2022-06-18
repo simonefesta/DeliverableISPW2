@@ -1,4 +1,4 @@
-package org.festinho.part1Retrieve;
+package org.festinho.part1;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.InitCommand;
@@ -31,9 +31,17 @@ import java.util.logging.Logger;
 
 public class RetrieveGIT {
 
+    private RetrieveGIT() {
+    }
+
 
     private static Repository repository;
     private static final Logger logger = Logger.getLogger(RetrieveGIT.class.getName());
+    private static final String FILE_EXTENSION = ".java";
+
+    private static final String DELETE = "DELETE";
+    private static final String MODIFY = "MODIFY";
+
 
 
     //path è percorso url repository
@@ -41,9 +49,6 @@ public class RetrieveGIT {
     public static List<RevCommit> getAllCommit(List<Release> releaseList, Path repo) throws GitAPIException, IOException {
 
         ArrayList<RevCommit> commitList = new ArrayList<>(); //ritorno una lista di RevCommit, ciascuno che include tutte le informazioni di quel commit.
-
-        //InitCommand init = Git.init();       //creo repo vuota o reinizializzo una esistente
-        //init.setDirectory(repo.toFile());    //dove voglio che stia
 
 
         try (Git git = Git.open(repo.toFile())) {                   //accesso alla git repository con jgit
@@ -179,7 +184,7 @@ public class RetrieveGIT {
         {
             String type = diff.getChangeType().toString(); //prendo i cambiamenti
 
-            if (diff.toString().contains(".java") && type.equals("MODIFY") || type.equals("DELETE"))
+            if (diff.toString().contains(FILE_EXTENSION) && type.equals(MODIFY) || type.equals(DELETE))
             {
 
                 /*Check BUGGY, releaseCommit è contenuta in AV? se si file relase è buggy.
@@ -188,7 +193,7 @@ public class RetrieveGIT {
 
                 String file;
                 if (diff.getChangeType() == DiffEntry.ChangeType.DELETE || diff.getChangeType() == DiffEntry.ChangeType.RENAME )
-                    { // if (diff.getChangeType() == DiffEntry.ChangeType.DELETE || diff.getChangeType() == DiffEntry.ChangeType.RENAME) {
+                    {
                         file = diff.getOldPath(); //file modificato
                      }
                 else
@@ -196,18 +201,23 @@ public class RetrieveGIT {
                         file = diff.getNewPath();
                     }
 
-                for (Release release : releasesList)
-                {
-                    for (JavaFile javaFile : release.getFileList())
+                setBuggyness(file,releasesList, av);
 
-                    {
-                        if (    (javaFile.getName().equals(file)) && (av.contains((release.getIndex())))    ) {
-                                javaFile.setBugg("Yes");
-                            }
-                    }
+            }
+        }
+    }
 
+    public static void setBuggyness(String file, List<Release> releasesList, List<Integer> av) {
+        for (Release release : releasesList)
+        {
+            for (JavaFile javaFile : release.getFileList())
+
+            {
+                if (    (javaFile.getName().equals(file)) && (av.contains((release.getIndex())))    ) {
+                    javaFile.setBugg("Yes");
                 }
             }
+
         }
     }
 
