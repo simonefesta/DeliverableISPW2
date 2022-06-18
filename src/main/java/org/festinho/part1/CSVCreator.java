@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 public class CSVCreator {
 
     static Logger logger = Logger.getLogger(CSVCreator.class.getName());
-    private static final String ERROR = "Error in csv writer";
 
     private CSVCreator() {
     }
@@ -67,8 +66,7 @@ public class CSVCreator {
                 }
             }
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, ERROR);
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "Error in writeCSVBuggyness");
         }
     }
 
@@ -192,9 +190,7 @@ public static void writeWekaCSV(List<WekaRecord> wekaRecordList, String projName
         }
 
     } catch (Exception ex) {
-        logger.log(Level.SEVERE,ERROR);
-        ex.printStackTrace();
-
+        logger.log(Level.SEVERE, "Error in writeWekaCSV");
     }
 }
 

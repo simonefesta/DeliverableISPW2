@@ -19,14 +19,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-/** Ho 16 metriche, ne devo prendere almeno 9.
- * Devo ignorare la seconda metà delle release in ordine temporale.
- * Devo considerare unicamente i file.java
- * Ogni colonna dataset calcola con script apposito, considerando tutti i commit e usandoli in base all'esigenza.
- * 1 release -> n revisioni -> n commit -> n autori. quindi autori per release.
- */
 public class Metrics {
 
     private Metrics() {
@@ -37,6 +33,7 @@ public class Metrics {
     private static final String DELETE = "DELETE";
     private static final String MODIFY = "MODIFY";
     private static final String ADD = "ADD";
+    static Logger logger = Logger.getLogger(Metrics.class.getName());
 
 
     public static void getMetrics(List<Release> releasesList, String repo) throws IOException {
@@ -102,7 +99,7 @@ public class Metrics {
                 locDeleted += edit.getEndA() - edit.getBeginA();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error in CalculateMetrics");
         }
 
         int churn = locAdded - locDeleted;      //cosi definito
