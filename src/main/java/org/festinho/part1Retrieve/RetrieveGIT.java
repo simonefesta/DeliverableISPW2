@@ -1,4 +1,4 @@
-package org.festinho.deliv1;
+package org.festinho.part1Retrieve;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.InitCommand;

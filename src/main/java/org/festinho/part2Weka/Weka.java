@@ -1,4 +1,4 @@
-package org.festinho.deliv2;
+package org.festinho.part2Weka;
 /*
  *  How to use WEKA API in Java
  *  Copyright (C) 2014
@@ -10,8 +10,9 @@ package org.festinho.deliv2;
  *  and my YouTube Channel!
  *
  */
-import org.festinho.deliv1.CSVcreator;
-import org.festinho.deliv1.RetrieveJira;
+import org.festinho.part1Retrieve.CSVcreator;
+import org.festinho.part1Retrieve.MainClass;
+import org.festinho.part1Retrieve.RetrieveJira;
 import org.festinho.entities.WekaRecord;
 import org.festinho.entities.Release;
 import weka.attributeSelection.BestFirst;
@@ -32,7 +33,6 @@ import weka.core.converters.CSVLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +48,6 @@ import weka.filters.supervised.instance.SpreadSubsample;
 
 
 public class Weka {
-    private static final String NAME_PROJECT = "AVRO"; //AVRO
     static Logger logger = Logger.getLogger(Weka.class.getName());
     private static List<WekaRecord> wekaRecordList;
     private static final String ERROR_CLASSIFIER = "Error in building classifier";
@@ -57,23 +56,23 @@ public class Weka {
     public static void main(String[] args) throws Exception{
 
         //load datasets
-        List<Release> releasesList = RetrieveJira.getListRelease(NAME_PROJECT);
+        List<Release> releasesList = RetrieveJira.getListRelease(MainClass.nameProj);
         removeHalf(releasesList);
         csv2arff();
         wekaRecordList = new ArrayList<>();
 
 
-        String arffPath =  "/Users/festinho/IdeaProjects/Deliverable1/"+NAME_PROJECT.toLowerCase()+".Buggyness.arff";
+        String arffPath =  "/Users/festinho/IdeaProjects/Deliverable1/"+MainClass.nameProj.toLowerCase()+".Buggyness.arff";
         logger.log(Level.INFO, "Starting WalkForward...");
         walkForward(arffPath, releasesList);
         logger.log(Level.INFO, "... Done! Now creating CSV file.");
 
-        CSVcreator.writeWekaCSV(wekaRecordList,NAME_PROJECT);
+        CSVcreator.writeWekaCSV(wekaRecordList,MainClass.nameProj);
     }
 
 
     public static void csv2arff() throws IOException {
-        String csvPath = "/Users/festinho/IdeaProjects/Deliverable1/"+NAME_PROJECT.toLowerCase()+".Buggyness.csv";
+        String csvPath = "/Users/festinho/IdeaProjects/Deliverable1/"+MainClass.nameProj.toLowerCase()+".Buggyness.csv";
         CSVLoader loader = new CSVLoader();
             loader.setSource(new File(csvPath));
             Instances data = loader.getDataSet();//get instances object
@@ -81,7 +80,7 @@ public class Weka {
             ArffSaver saver = new ArffSaver();
             saver.setInstances(data);//set the dataset we want to convert
             //and save as ARFF
-            saver.setFile(new File("/Users/festinho/IdeaProjects/Deliverable1/"+NAME_PROJECT.toLowerCase()+".Buggyness.arff"));
+            saver.setFile(new File("/Users/festinho/IdeaProjects/Deliverable1/"+MainClass.nameProj.toLowerCase()+".Buggyness.arff"));
             saver.writeBatch();
 
         }
@@ -139,7 +138,7 @@ public class Weka {
 
             Instances training = null;
             Instances testing = null;
-            WekaRecord entry = new WekaRecord(NAME_PROJECT); //sono info dell'analisi che faccio: cosa uso, che ottengo...
+            WekaRecord entry = new WekaRecord(MainClass.nameProj); //sono info dell'analisi che faccio: cosa uso, che ottengo...
             int numTrain = j - 1; // se indice j = 2, allora come allenamento uso solo dataset 1
 
             entry.setNumTrainingRelease(numTrain);
@@ -198,7 +197,7 @@ public class Weka {
             //sembra una copia dei dati trovati sopra!
             Instances trainingCopy = new Instances(training);
             Instances testingCopy = new Instances(testing);
-            WekaRecord entryCopy = new WekaRecord(NAME_PROJECT);
+            WekaRecord entryCopy = new WekaRecord(MainClass.nameProj);
             entryCopy.setNumTrainingRelease(entry.getNumTrainingRelease());
             entryCopy.setTrainingPerc(entry.getTrainingPerc());
             entryCopy.setDefectPercTrain(entry.getDefectPercTrain());
@@ -244,7 +243,7 @@ public class Weka {
             Instances trainingCopy = new Instances(training);
             Instances testingCopy = new Instances(testing);
 
-            WekaRecord entryCopy = new WekaRecord(NAME_PROJECT);
+            WekaRecord entryCopy = new WekaRecord(MainClass.nameProj);
             entryCopy.setNumTrainingRelease(entry.getNumTrainingRelease());
             entryCopy.setClassifierName(entry.getClassifierName());
             entryCopy.setTrainingPerc(entry.getTrainingPerc());
@@ -320,7 +319,7 @@ public class Weka {
             FilteredClassifier filteredClassifier = null;
 
 
-            WekaRecord entryCopy = new WekaRecord(NAME_PROJECT);
+            WekaRecord entryCopy = new WekaRecord(MainClass.nameProj);
             entryCopy.setNumTrainingRelease(entry.getNumTrainingRelease());
             entryCopy.setClassifierName(entry.getClassifierName());
             entryCopy.setTrainingPerc(entry.getTrainingPerc());
@@ -409,7 +408,7 @@ public class Weka {
             Instances trainingCopy = new Instances(training);
             Instances testingCopy = new Instances(testing);
 
-            WekaRecord entryCopy = new WekaRecord(NAME_PROJECT);
+            WekaRecord entryCopy = new WekaRecord(MainClass.nameProj);
             entryCopy.setNumTrainingRelease(entry.getNumTrainingRelease());
             entryCopy.setClassifierName(entry.getClassifierName());
             entryCopy.setFeatureSelection(entry.getFeatureSelection());

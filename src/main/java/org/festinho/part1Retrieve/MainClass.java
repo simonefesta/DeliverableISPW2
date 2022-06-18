@@ -1,4 +1,4 @@
-package org.festinho.deliv1;
+package org.festinho.part1Retrieve;
 
 
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -25,11 +25,11 @@ public class MainClass {
     private static List<Release> releasesList;
     private static List<Ticket> ticketList;
     private static List<RevCommit> commitList;
+    public static final String nameProj = "BOOKKEEPER"; // OR 'AVRO'
 
 
     public static void main(String[] args) throws IllegalStateException, GitAPIException, IOException, JSONException {
 
-        String nameProj = "BOOKKEEPER"; // or 'AVRO'
         String repo = "/Users/festinho/IdeaProjects/" + nameProj.toLowerCase() + "/.git";
         Path repoPath = Paths.get("/Users/festinho/IdeaProjects/" + nameProj.toLowerCase());
 
