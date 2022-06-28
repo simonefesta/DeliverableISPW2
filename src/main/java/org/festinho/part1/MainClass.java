@@ -77,7 +77,7 @@ public class MainClass {
             for (RevCommit commit : commitList) {   //LINKAGE ticketList - commitList, se c'è prendo la data di creazione del commit
                 String message = commit.getFullMessage();
 
-                if (message.contains(ticketID)) {
+                if (existsLinkMessageCommit(message,ticketID)) {
                     LocalDateTime commitDate = commit.getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
                     commitDateList.add(commitDate);
                     ticket.getCommitList().add(commit);
@@ -106,6 +106,13 @@ public class MainClass {
                 ticket.remove();
             }
         }
+    }
+
+    private static boolean existsLinkMessageCommit(String message, String ticketID) {
+        // Senza questo check, potrei linkare commit contenente BOOKKEEPER-1074 con ticketID = 107 ad esempio, poichè contains ritornerebbe true.
+        return message.contains(ticketID + "\n") || message.contains(ticketID + " ") || message.contains(ticketID + ":")
+                || message.contains(ticketID + ".") || message.contains(ticketID + "/") || message.endsWith(ticketID) ||
+                message.contains(ticketID + "]") || message.contains(ticketID + "_") || message.contains(ticketID + "-") || message.contains(ticketID + ")");
     }
 
 
