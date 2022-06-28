@@ -68,7 +68,6 @@ public class MainClass {
 
 
     private static void linkTicketCommits() {
-
         for (Ticket ticket : ticketList) {
             ArrayList<LocalDateTime> commitDateList = new ArrayList<>();
 
@@ -97,7 +96,6 @@ public class MainClass {
 
         }
         //Rimuovo ticket che non hanno alcun commit associato, li riconosco perchè non hanno resolutationDate (data ultimo commit).
-
         Iterator<Ticket> ticket = ticketList.iterator();
 
         while (ticket.hasNext()) {
