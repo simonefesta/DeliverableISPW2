@@ -117,7 +117,7 @@ public class Weka {
 
             source = new DataSource(arffPath); //'carico' i dati dal file .arff
             /* PRENDO SOLO LE RIGHE ASSOCIATE ALLA META' DELLE RELEASE */
-
+            //in Source ho tutti i dati insieme, ma per walkForward devo 'suddividere' le instanze in base alla release.
           for (Release release : releaseList)
             {   //per ogni release in lista di release
                 Instances instances = source.getDataSet(); // ritorna full dataset
@@ -276,7 +276,7 @@ public class Weka {
         else
         {
             AttributeSelection filter = new AttributeSelection();
-            CfsSubsetEval evaluator = new CfsSubsetEval();
+            CfsSubsetEval evaluator = new CfsSubsetEval(); //wrapper approach
 
             if (featureSelection.equals("Best First"))
             {

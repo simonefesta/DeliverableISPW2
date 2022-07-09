@@ -181,7 +181,7 @@ public class MainClass {
 
         }
         else
-         {  //caso di errore, cioè IV viene dopo FV oppure OV, e non può essere.
+         { //caso di errore, cioè IV viene dopo FV oppure OV, e non può essere.
             ticket.setIV(0);        //setto come errore
             ticket.getAV().clear();
             ticket.getAV().add(0);
