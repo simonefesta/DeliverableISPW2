@@ -1,4 +1,4 @@
-# DeliverableISPW2
+# DeliverableISW2
 
 Progetto per il corso di Ingegneria del software 2, corso di LM in Ingegneria Informatica, anno 2022.
 Il progetto prevede due moduli:
